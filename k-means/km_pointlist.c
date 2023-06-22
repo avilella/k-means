@@ -13,11 +13,7 @@
 #include <stdio.h>
 #include <limits.h>
 
-#ifdef _WIN32
-#include "gettimeofday.c"
-#else
 #include <sys/time.h>
-#endif
 
 struct km_pointlist_
 {
@@ -30,11 +26,12 @@ struct km_pointlist_
 
 km_pointlist km_pointlist_new(uint64_t num_points)
 {
-    struct timeval time;
-    gettimeofday(&time, NULL);
+    /* struct timeval time; */
+    /* gettimeofday(&time, NULL); */
     
     km_pointlist pointlist = malloc(sizeof(struct km_pointlist_));
-    pointlist->seed = (time.tv_sec + time.tv_usec) % UINT_MAX;
+    pointlist->seed = 42;
+    // = (time.tv_sec + time.tv_usec) % UINT_MAX;
     pointlist->num_points = num_points;
     pointlist->points = malloc(num_points * sizeof(struct km_point_));
     return pointlist;
